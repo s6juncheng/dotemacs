@@ -64,7 +64,7 @@
 ;; specify to use python3
 ;; (setq py-python-command "python3")
 
-;; (setq python-shell-interpreter "~/bin/anaconda3/bin/python3")
+;; (setq python-shell-interpreter "/opt/modules/i12g/anaconda/3-5.0.1/envs/mmsplice_dev/bin/python")
 (setq python-shell-interpreter "ipython"
       python-shell-interpreter-args "-i --simple-prompt")
 

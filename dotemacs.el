@@ -56,7 +56,6 @@
 ;; show where the buffer ends
 ;; (setq default-indicate-empty-lines t)
 
-
 ;; --------------------------------------------
 ;; shell-script configuration
 (load "~/.emacs.d/dot-emacs-config/shell-script.el")
@@ -153,7 +152,7 @@
 
 ;;---------------------------------------------------------------
 ;; ESS - load Emacs speaks statistics:
-;;(load "~/.emacs.d/dot-emacs-config/ess.el")
+(load "~/.emacs.d/dot-emacs-config/ess.el")
 
 ;;---------------------------------------------------------------
 ;; elpy - load python IDE:

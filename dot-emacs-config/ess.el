@@ -1,20 +1,30 @@
 ;; ESS - Emacs speaks statistics config file
 
 ;; install required packages (if they are not installed already):
-(install-package 'ess 
-		 'ess-R-object-popup
+(install-package 'ess
+		 'flycheck
 		 'polymode
+		 ;;'ess-R-object-popup
 		 ;; 'r-autoyas 		;maybe ? 
 		 )
 
 ;; I compiled it from source
 ;; (add-to-list 'load-path "~/.emacs.d/ess-14.09/lisp/")
 (require 'ess-site)
-(require 'ess-eldoc) ;; - giving
-(require 'ess-R-object-popup)
+;;(require 'ess-eldoc) ;; - giving
+;;(require 'ess-R-object-popup)
 (define-key ess-mode-map (kbd "C-c C-g") 'ess-R-object-popup)
 (define-key comint-mode-map (kbd "C-c C-g") 'ess-R-object-popup)
 ;; we load ess
+
+;; -----------------------------------
+;; Assign key
+;;
+;; (setq ess-S-assign-key (kbd "C-="))
+;; (ess-toggle-S-assign-key t) ; enable above key definition
+;; (ess-toggle-S-assign nil)
+;; (ess-toggle-S-assign nil)
+;; (ess-toggle-underscore nil) ; leave underscore key alone!
 
 ;; set style to Rstudio
 ;; http://stackoverflow.com/questions/17608936/ess-set-tab-whitespace-level
@@ -154,46 +164,35 @@
 ;; if this is not assigned, then ess will save it to the path where R was called
 ;; read the ess info page for more information File: 4.2.1  Saving the command History
 
-;; -----------------------------------
-;; Assign key
-;;
-(setq ess-S-assign-key (kbd "C-="))
-(ess-toggle-S-assign-key t) ; enable above key definition
-(ess-toggle-S-assign nil)
-(ess-toggle-S-assign nil)
-(ess-toggle-underscore nil) ; leave underscore key alone!
-
 
 ;;-----> copied from  http://www.emacswiki.org/emacs/ESS-smart-lessthan
-;; (setq ess-S-assign "_")
-;; (setq ess-my-smart-key "<")
+(setq ess-S-assign "_")
+(setq ess-my-smart-key (kbd "M--"))
 
+(defun ess-insert-S-assign-mod ()
+  (interactive)
+  (let ((ess-S-assign " <- ") (assign-len (length ess-S-assign))) 
+    (if (and
+	 (>= (point) (+ assign-len (point-min)))
+	 (save-excursion
+	   (backward-char assign-len)
+	   (looking-at ess-S-assign)))
+	(progn
+	  (delete-char (- assign-len))
+	  (insert ess-my-smart-key))
+      (delete-horizontal-space)
+      (insert ess-S-assign))))
 
+(defun ess-smart-lt ()
+  (interactive)
+  (if (or (looking-at ess-S-assign)
+	  (ess-inside-string-or-comment-p (point)))
+      (insert ess-my-smart-key)
+    (ess-insert-S-assign-mod)))
 
-;; (defun ess-insert-S-assign-mod ()
-;;   (interactive)
-;;   (let ((ess-S-assign " <- ") (assign-len (length ess-S-assign))) 
-;;     (if (and
-;; 	 (>= (point) (+ assign-len (point-min)))
-;; 	 (save-excursion
-;; 	   (backward-char assign-len)
-;; 	   (looking-at ess-S-assign)))
-;; 	(progn
-;; 	  (delete-char (- assign-len))
-;; 	  (insert ess-my-smart-key))
-;;       (delete-horizontal-space)
-;;       (insert ess-S-assign))))
-
-;; (defun ess-smart-lt ()
-;;   (interactive)
-;;   (if (or (looking-at ess-S-assign)
-;; 	  (ess-inside-string-or-comment-p (point)))
-;;       (insert ess-my-smart-key)
-;;     (ess-insert-S-assign-mod)))
-
-;; ;; (add-hook 'R-mode-hook (lambda () (local-set-key ess-my-smart-key 'ess-smart-lt)))
-;; (add-hook 'ess-mode-hook (lambda () (local-set-key ess-my-smart-key 'ess-smart-lt)))
-;; (add-hook 'inferior-ess-mode-hook (lambda () (local-set-key ess-my-smart-key 'ess-smart-lt)))
+;; (add-hook 'R-mode-hook (lambda () (local-set-key ess-my-smart-key 'ess-smart-lt)))
+(add-hook 'ess-mode-hook (lambda () (local-set-key ess-my-smart-key 'ess-smart-lt)))
+(add-hook 'inferior-ess-mode-hook (lambda () (local-set-key ess-my-smart-key 'ess-smart-lt)))
 
 ;; prvious command like in the usual shell
 ;; for this to work one has
@@ -307,10 +306,10 @@ lsos <- function(..., n=10) {
 ;;       (append '("~/.emacs.d/polymode/"  "~/.emacs.d/polymode/modes")
 ;;               load-path))
 
-(require 'poly-R)
-(require 'poly-markdown)
-(require 'poly-org)
-(require 'poly-noweb)
+;;(require 'poly-R)
+;;(require 'poly-markdown)
+;;(require 'poly-org)
+;;(require 'poly-noweb)
 ;; ;; had to install pandoc on linux
 
 ;; ;;; MARKDOWN
@@ -320,7 +319,7 @@ lsos <- function(..., n=10) {
 ;; ;;; R modes
 ;; (add-to-list 'auto-mode-alist '("\\.Snw" . poly-noweb+r-mode))
 ;; (add-to-list 'auto-mode-alist '("\\.Rnw" . poly-noweb+r-mode))
-(add-to-list 'auto-mode-alist '("\\.Rmd" . poly-markdown+r-mode))
+;;(add-to-list 'auto-mode-alist '("\\.Rmd" . poly-markdown+r-mode))
 
 ;; --------------------------------------------
 

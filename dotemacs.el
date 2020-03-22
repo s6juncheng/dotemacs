@@ -24,7 +24,7 @@
 		 'tabbar
 		 'openwith 
 		 'outline-magic
-		 'color-theme
+		 'color-theme-modern
 		 'with-editor
 		 'xterm-color
 		 'yasnippet
@@ -86,12 +86,9 @@
 ;; --------------------------------------------
 ;; home specific color theme & layout
 
-;; requires M-x color-theme select   color-theme from elpa
-(progn
-  (require 'color-theme)
-  (color-theme-initialize)
-  (setq color-theme-is-global t)
-  (color-theme-subtle-hacker))
+;; requires M-x color-theme-modern
+(load-theme 'subtle-hacker t t)
+(enable-theme 'subtle-hacker)
 
 ;; layout
 (load "~/.emacs.d/dot-emacs-config/layout.el")
@@ -182,123 +179,6 @@
 (load "~/.emacs.d/dot-emacs-config/c-mode.el")
 
 ;;----------------------------------------------------------------------------------------
-
-;; load and save state - not using it
-;; (load "~/.emacs.d/dot-emacs-config/save-state.el")
-
-;; 
-(custom-set-variables
- ;; custom-set-variables was added by Custom.
- ;; If you edit it by hand, you could mess it up, so be careful.
- ;; Your init file should contain only one such instance.
- ;; If there is more than one, they won't work right.
- '(LaTeX-command "latex -synctex=1")
- '(LaTeX-math-abbrev-prefix "¸")
- '(TeX-source-correlate-method (quote synctex))
- '(TeX-source-correlate-start-server t)
- '(ansi-color-faces-vector
-   [default bold shadow italic underline bold bold-italic bold])
- '(ansi-color-names-vector
-   (vector "#ffffff" "#f36c60" "#8bc34a" "#fff59d" "#4dd0e1" "#b39ddb" "#81d4fa" "#263238"))
- '(column-number-mode t)
- '(custom-safe-themes
-   (quote
-    ("2305decca2d6ea63a408edd4701edf5f4f5e19312114c9d1e1d5ffe3112cde58" "e97dbbb2b1c42b8588e16523824bc0cb3a21b91eefd6502879cf5baa1fa32e10" default)))
- '(display-time-mode t)
- '(ediff-split-window-function (quote split-window-horizontally))
- '(elpy-test-pytest-runner-command (quote ("python" "-m" "pytest")))
- '(elpy-test-runner (quote elpy-test-pytest-runner))
- '(fci-rule-color "#37474f")
- '(flycheck-lintr-linters
-   "with_defaults(line_length_linter(129), default = default_linters[-which(names(default_linters) %in% c(\"assignment_linter\",  \"commas_linter\", \"infix_spaces_linter\", \"camel_case_linter\", \"snake_case_linter\", \"single_quotes_linter\", \"trailing_blank_lines_linter\", \"trailing_whitespace_linter\", \"commented_code_linter\", \"object_usage_linter\"))])")
- '(hl-sexp-background-color "#1c1f26")
- '(ide-skel-tabbar-mwheel-mode nil t)
- '(inhibit-startup-screen t)
- '(mediawiki-site-alist
-   (quote
-    (("Wikipedia" "http://en.wikipedia.org/w/" "username" "password" "Main Page")
-     ("mywiki" "http://gagneurweb.genzentrum.lmu.de/wiki/" "" "" "aggagneur:BayesRare_home"))))
- '(org-agenda-custom-commands
-   (quote
-    (("h" agenda "home"
-      ((org-agenda-tag-filter-preset
-	(quote
-	 ("HOME")))))
-     ("w" agenda "work"
-      ((org-agenda-tag-filter-preset
-	(quote
-	 ("WORK")))))
-     ("d" todo "DELEGATED" nil)
-     ("c" todo "DONE|DEFERRED|CANCELLED" nil)
-     ("W" todo "WAITING" nil)
-     ("l" agenda "21 days"
-      ((org-agenda-ndays 21)))
-     ("A" agenda "#A tasks"
-      ((org-agenda-skip-function
-	(lambda nil
-	  (org-agenda-skip-entry-if
-	   (quote notregexp)
-	   "\\=.*\\[#A\\]")))
-       (org-agenda-ndays 1)
-       (org-agenda-overriding-header "Today's Priority #A tasks: ")))
-     ("u" alltodo "Unscheduled"
-      ((org-agenda-skip-function
-	(lambda nil
-	  (org-agenda-skip-entry-if
-	   (quote scheduled)
-	   (quote deadline)
-	   (quote regexp)
-	   "
-]+>")))
-       (org-agenda-overriding-header "Unscheduled TODO entries: "))))))
- '(org-agenda-files nil)
- '(org-agenda-ndays 7)
- '(org-agenda-overriding-columns-format
-   "%40ITEM(Task) %TODO %SCHEDULED %11Effort(Est. Effort){:} %6CLOCKSUM(T-done)  %6CLOSED(Closed)" t)
- '(org-agenda-show-all-dates t)
- '(org-agenda-skip-deadline-if-done t)
- '(org-agenda-skip-scheduled-if-done t)
- '(org-agenda-start-on-weekday nil)
- '(org-fast-tag-selection-single-key (quote expert))
- '(org-remember-store-without-prompt t)
- '(org-reverse-note-order t)
- '(package-selected-packages
-   (quote
-    (tabbar-ruler neotree fic-mode transpose-frame smooth-scrolling scroll-restore company-c-headers flx-ido helm-descbinds helm-projectile helm autopair dockerfile-mode nodejs-repl tern-auto-complete tern js3-mode company-web ac-html ac-emmet php-auto-yasnippets emmet-mode web-mode xterm-color use-package tabbar snakemake-mode smart-mode-line py-autopep8 outline-magic openwith multi-term mediawiki markdown-mode magit helm-pydoc gnuplot-mode gnuplot flycheck ess elpy ein diminish company-quickhelp company-jedi color-theme auto-complete-auctex auctex)))
- '(remember-annotation-functions (quote (org-remember-annotation)))
- '(remember-handler-functions (quote (org-remember-handler)))
- '(safe-local-variable-values
-   (quote
-    ((whitespace-style face tabs spaces trailing lines space-before-tab::space newline indentation::space empty space-after-tab::space space-mark tab-mark newline-mark))))
- '(show-paren-mode t)
- '(speedbar-show-unknown-files t)
- '(tabbar-button-highlight ((t (:inherit tabbar-button))))
- '(tabbar-highlight ((t nil)))
- '(tabbar-mode t nil (tabbar))
- '(tabbar-scroll-left-button (quote (("") "")))
- '(tabbar-scroll-right-button (quote (("") "")))
- '(vc-annotate-background nil)
- '(vc-annotate-color-map
-   (quote
-    ((20 . "#f36c60")
-     (40 . "#ff9800")
-     (60 . "#fff59d")
-     (80 . "#8bc34a")
-     (100 . "#81d4fa")
-     (120 . "#4dd0e1")
-     (140 . "#b39ddb")
-     (160 . "#f36c60")
-     (180 . "#ff9800")
-     (200 . "#fff59d")
-     (220 . "#8bc34a")
-     (240 . "#81d4fa")
-     (260 . "#4dd0e1")
-     (280 . "#b39ddb")
-     (300 . "#f36c60")
-     (320 . "#ff9800")
-     (340 . "#fff59d")
-     (360 . "#8bc34a"))))
- '(vc-annotate-very-old-color nil))
 
 ;; openwith & dired config
 (load "~/.emacs.d/dot-emacs-config/dired.el")
